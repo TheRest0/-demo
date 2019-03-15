@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,8 +45,8 @@
 	}
 	#pic-ct .item .header{
 		height: 25px;
-	    margin: 0 12px;
-	    border-bottom: 1px solid #DBDBDB;
+    margin: 0 12px;
+    border-bottom: 1px solid #DBDBDB;
 	}
 	#pic-ct .desp{
 		font-size: 12px;
@@ -75,18 +74,9 @@
 	</div>
 </body>
 
-
-
 <script>
 	var curPage = 1
 	var perPageCount = 10
-	var colSumHeight = []
-	var nodeWidth = $('.item').outerWidth(true)
-	var colNum = parseInt($('#pic-ct').width()/nodeWidth)
-	for(var i = 0; i < colNum.length; i++){
-		colSumHeight[i] = 0
-	}
-
 	var isDataArrive = true
 
 	start()
@@ -107,24 +97,23 @@
 
 	//获取数据
 	function getData(callback){
-			$.ajax({
-				url: 'http://platform.sina.com.cn/slide/album_tech',
-				dataType: 'jsonp',   
-				jsonp:"jsoncallback",
-				data: {
-					app_key: '1271687855',
-					num: perPageCount,
-					page: curPage
-				}
-			}).done(function(ret){
-				console.log(ret.data)
-				if(ret && ret.status && ret.status.code === "0"){
-					callback(ret.data);   //如果数据没问题，那么生成节点并摆放好位置
-					curPage++
-				}else{
-					console.log('get error data');
-				}
-			});
+		$.ajax({
+			url: 'http://platform.sina.com.cn/slide/album_tech',
+			dataType: 'jsonp',   
+			jsonp:"jsoncallback",
+			data: {
+				app_key: '1271687855',
+				num: perPageCount,
+				page: curPage
+			}
+		}).done(function(ret){
+			if(ret && ret.status && ret.status.code === "0"){
+				callback(ret.data);   //如果数据没问题，那么生成节点并摆放好位置
+				curPage++
+			}else{
+				console.log('get error data');
+			}
+		});
 	}
 
 	//拼接dom
@@ -143,7 +132,6 @@
 	  var scrollH = $(window).scrollTop(),
 	  	  winH = $(window).height(),
 	  	  top = $el.offset().top;
-
 		  if(top < winH + scrollH){
 		  	return true;
 		  }else{
@@ -178,8 +166,6 @@ function waterFallPlace($nodes){
 		var $cur = $(this)
 		var minSumHeight = colSumHeight[0]
 		var idx = 0
-			  
-
 		for(var i=0;i<colSumHeight.length; i++){
 			if(colSumHeight[i] < minSumHeight){
 				minSumHeight = colSumHeight[i]
