@@ -75,7 +75,7 @@
 
 <script>
 	var curPage = 1
-	var perPageCount = 10
+	var perPageCount = 9
 	var isDataArrive = true
 
 	start()
@@ -85,7 +85,7 @@
 			isDataArrive = true
 			$.each(newsList, function(idx, news){
 				var $node = getNode(news)
-				$node.find('img').load(function(){
+				$node.find('img').on('load',function(){
 					$('#pic-ct').append($node)
 					waterFallPlace($node)
 				})
@@ -131,7 +131,7 @@
 	  var scrollH = $(window).scrollTop(),
 	  	  winH = $(window).height(),
 	  	  top = $el.offset().top;
-		  if(top < winH + scrollH){
+		  if(top < winH + scrollH + 100){
 		  	return true;
 		  }else{
 		  	return false;
@@ -141,14 +141,14 @@
 	var clock;
 	$(window).on('scroll', function(){
 		if(!isDataArrive) return
-    if(clock){
-      clearTimeout(clock);
-    }
-    clock = setTimeout(function(){
-      if(isVisible($('#load'))){
+		if(clock){
+		  clearTimeout(clock);
+		}
+		clock = setTimeout(function(){
+		  if(isVisible($('#load'))){
 				start()
 			}
-    }, 100);
+		}, 100);
 	});
 
 //瀑布流排版
